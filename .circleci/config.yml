@@ -20,9 +20,8 @@ jobs:
             - node_modules
       - run:
           name: Build the application
-          command:|
-                cd my-app && npm run build 
-                ls
+          command: cd my-app && npm run build && ls
+             
 #       - run:
 #       #Get all pre-requisites
 #           command: |
