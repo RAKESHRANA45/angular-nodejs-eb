@@ -10,7 +10,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install dependencies
-          command: npm install
+          command: cd my-app && npm install
       - run:
           name: ng install
           command: npm install ng
