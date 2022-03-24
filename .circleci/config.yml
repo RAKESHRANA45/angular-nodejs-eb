@@ -1,6 +1,14 @@
 version: 2
 jobs:
   build:
+   defaults: &defaults
+    docker:
+      - image: circleci/python:3.6.1
+    working_directory: ~/project
+    environment:
+      TF_IN_AUTOMATION: true
+   orbs:
+     terraform: circleci/terraform@3.0.1
     docker:
       - image: circleci/node:12.0
     steps:
@@ -86,3 +94,23 @@ workflows:
             branches:
               only:
                 - master
+  deploy_infrastructure:
+    jobs:
+      - terraform/validate:
+          checkout: true
+          context: terraform
+      - terraform/plan:
+          checkout: true
+          context: terraform
+          persist-workspace: true
+          requires:
+            - terraform/validate
+      - terraform/apply:
+          attach-workspace: true
+          context: terraform
+          filters:
+            branches:
+              only: main
+          requires:
+            - terraform/plan
+         
