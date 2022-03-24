@@ -68,14 +68,17 @@ jobs:
             aws_login=`aws ecr get-login --no-include-email --region us-east-1`
             eval $aws_login
             aws s3 sync ./my-app/dist/angular-nodejs-example/ s3://production-another-app
-  deploy_infrastructure:
+  deploy-infrastructure:
     docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/project
-    environment:
-      TF_IN_AUTOMATION: true
-    orbs:
-      terraform: circleci/terraform@3.0.1
+      - image: hashicorp/terraform
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ./
+      - run:
+          #Get all pre-requisites
+          command: |
+            terraform init
 workflows:
   version: 2
   build-test-and-deploy:
@@ -95,22 +98,10 @@ workflows:
             branches:
               only:
                 - master
-      - deploy_infrastructure:
-          jobs:
-            - terraform/validate:
-                checkout: true
-                context: terraform
-            - terraform/plan:
-                checkout: true
-                context: terraform
-                persist-workspace: true
-                requires:
-                  - terraform/validate
-            - terraform/apply:
-                attach-workspace: true
-                context: terraform
-                filters:
-                  branches:
-                    only: master
-                requires:
-                  - terraform/plan
+      - deploy-infrastructure:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
