@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-   defaults: &defaults
     docker:
       - image: circleci/python:3.6.1
     working_directory: ~/project
