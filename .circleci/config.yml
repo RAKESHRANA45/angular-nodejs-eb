@@ -36,8 +36,8 @@ jobs:
 #             - package.json
 #             - node_modules
 #             - src
-              - my-app/dist
-              - "**/*"
+              - my-app
+#               - "**/*"
   deploy-test:
     docker:
       - image: docker:17.05.0-ce-git
@@ -79,7 +79,7 @@ jobs:
           #Get all pre-requisites
           command: |
             ls
-            terraform init
+            cd my-app && terraform init 
 workflows:
   version: 2
   build-test-and-deploy:
