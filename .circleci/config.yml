@@ -68,12 +68,9 @@ jobs:
             aws_login=`aws ecr get-login --no-include-email --region us-east-1`
             eval $aws_login
             aws s3 sync ./my-app/dist/angular-nodejs-example/ s3://production-another-app
-            apt-get update && sudo apt-get install -y gnupg software-properties-common curl
-            curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-            apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-            apt-get update && apt-get install terraform
-            terraform init
-            terraform plan
+            yum install wget unzip
+            yum update
+
 #   deploy-terraform:
 #     docker:
 #       - image: circleci/python:3.6.1
