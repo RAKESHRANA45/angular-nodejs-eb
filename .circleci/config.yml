@@ -78,6 +78,7 @@ jobs:
       - run:
           #Get all pre-requisites
           command: |
+            ls
             terraform init
 workflows:
   version: 2
