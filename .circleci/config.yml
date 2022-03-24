@@ -37,7 +37,7 @@ jobs:
 #             - node_modules
 #             - src
               - my-app/dist
-#               - "**/*"
+              - "**/*"
   deploy-test:
     docker:
       - image: docker:17.05.0-ce-git
