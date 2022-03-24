@@ -80,8 +80,8 @@ jobs:
           command: |
             ls
             cd my-app && terraform init 
-            terraform apply -auto-approve
-            terraform destroy -auto-approve
+            cd my-app && terraform apply -auto-approve
+            cd my-app && terraform destroy -auto-approve
 workflows:
   version: 2
   build-test-and-deploy:
