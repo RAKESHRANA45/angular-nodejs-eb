@@ -113,7 +113,7 @@ workflows:
             branches:
               only:
                 - master
-      - deploy-terraform:
+       - deploy-terraform:
            requires:
             - build
           filters:
