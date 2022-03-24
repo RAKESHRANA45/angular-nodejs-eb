@@ -100,7 +100,7 @@ workflows:
                 - master
       - deploy-infrastructure:
           requires:
-            - build
+            - deploy-production
           filters:
             branches:
               only:
