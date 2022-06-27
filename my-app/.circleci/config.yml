@@ -48,8 +48,6 @@ jobs:
           command: |
             apk add --no-cache py-pip=9.0.0-r1
             pip install awscli==1.14.37
-            aws_login=`aws ecr get-login --no-include-email --region us-east-1`
-            eval $aws_login
             aws s3 sync ./dist/ s3://test-another-app
   deploy-production:
     docker:
