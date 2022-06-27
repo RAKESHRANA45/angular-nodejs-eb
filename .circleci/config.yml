@@ -65,8 +65,8 @@ jobs:
           command: |
             apk add --no-cache py-pip=9.0.0-r1
             pip install awscli==1.14.37
-            aws_login=`aws ecr get-login --no-include-email --region us-east-1`
-            eval $aws_login
+            env
+            echo $CIRCLECI_BRANCH
             aws s3 sync ./my-app/dist/angular-nodejs-example/ s3://production-another-app
 #   deploy-infrastructure:
 #     docker:
