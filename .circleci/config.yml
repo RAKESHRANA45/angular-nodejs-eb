@@ -65,9 +65,18 @@ jobs:
           command: |
             apk add --no-cache py-pip=9.0.0-r1
             pip install awscli==1.14.37
-            env
-            echo $CIRCLECI_BRANCH
-            aws s3 sync ./my-app/dist/angular-nodejs-example/ s3://production-another-app
+            echo $CIRCLE_BRANCH
+            if [ $CIRCLE_BRANCH == master ]
+            then
+                export s3_bucket=production-another-app
+  
+            elif [ $CIRCLE_BRANCH == test  ]
+            then
+                export s3_bucket=production-another-app
+            else
+               echo "None of the condition met"
+            fi
+            aws s3 sync ./my-app/dist/angular-nodejs-example/ s3://$s3_bucket
 #   deploy-infrastructure:
 #     docker:
 #       - image: hashicorp/terraform
